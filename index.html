@@ -23,53 +23,133 @@
 <canvas id="canvas"></canvas>
 
 <script>
+
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 
-// Make canvas fill the screen
+// Canvas
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
-// Image
+
+// ====================
+// Images
+// ====================
+
 const plr = new Image();
 plr.src = "assets/images/beb.png";
 
-const rock = new Image()
+const rock = new Image();
 rock.src = "assets/images/rock.png";
 
-const rock1 = new Image()
+const rock1 = new Image();
 rock1.src = "assets/images/rock1.png";
 
-const flower = new Image()
+const flower = new Image();
 flower.src = "assets/images/flower.png";
 
+const grass = new Image();
+grass.src = "assets/images/grass.png";
 
-//map
+const octo = new Image();
+octo.src = "assets/images/octo.png";
+
+
+// ====================
+// Map
+// ====================
 
 const map = [
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 3, 3, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 1, 1, 1, 2],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 1],
     [1, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 1],
     [1, 0, 2, 0, 0, 2, 2, 0, 0, 0, 0, 0, 1],
     [1, 0, 2, 0, 2, 2, 2, 0, 2, 0, 0, 0, 1],
+    [1, 4, 4, 0, 0, 4, 4, 4, 4, 4, 4, 0, 1],
+    [1, 4, 4, 0, 0, 4, 4, 4, 4, 4, 0, 0, 1],
+    [1, 4, 4, 4, 0, 4, 4, 4, 4, 4, 0, 0, 1],
+    [1, 4, 4, 0, 0, 4, 4, 4, 4, 0, 0, 4, 1],
+    [1, 4, 4, 0, 0, 4, 4, 4, 4, 0, 0, 4, 1],
+    [1, 4, 4, 0, 4, 4, 4, 4, 0, 0, 4, 4, 1],
+    [1, 4, 4, 0, 0, 0, 0, 4, 0, 0, 4, 4, 1],
+    [1, 4, 4, 0, 0, 0, 0, 4, 0, 4, 4, 4, 1],
+    [1, 4, 4, 4, 0, 0, 0, 0, 0, 4, 4, 4, 1],
+    [1, 4, 4, 4, 4, 0, 0, 0, 0, 0, 4, 0, 0],
+    [1, 4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [1, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+    [1, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 1, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
+    [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1],
+    [1, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+    [1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+    [1, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+];
+
+
+// ====================
+// enemies
+// ====================
+
+let enemies = [
+    ['octo', 10, 1000, 4300, 0],
+    ['octo', 10, 700, 4000, 29]
 ]
+// [name, hp, x, y, count]
 
-const g = 0.981
+// ====================
+// Player
+// ====================
 
+const playerWidth = 100;
+const playerHeight = 100;
 
-// Player position
-let px = 100;
-let py = 100;
-let pg = 0
-let j = 25
-let pj = 0;
+// let px = 100;
+// let py = 2200;
 
-// Movement speed
+let px = 400;
+let py = 4500;
+
+// ====================
+// Physics
+// ====================
+
 const speed = 10;
+const gravity = 0.981;
 
-// Keys currently being held
+let velocityY = 0;
+
+const jumpStrength = 25;
+
+
+// ====================
+// Keyboard
+// ====================
+
 const keys = {};
 
 document.addEventListener("keydown", (event) => {
@@ -80,149 +160,318 @@ document.addEventListener("keyup", (event) => {
     keys[event.key.toLowerCase()] = false;
 });
 
-function keysi() {
-    if (keys["w"]) py -= speed;
-    if (keys["s"]) py += speed;
-    if (keys["a"]) px -= speed;
-    if (keys["d"]) px += speed;
-    if (keys[" "]) pj = j;
-}
 
-function drawMap()
-{
-    let pointX = 0
-    let pointY = 0
-
-    for (const horz of map)
-    {
-        for (const indiv of horz)
-        {
-            if (indiv == 1)
-            {
-                ctx.drawImage(rock, pointX, pointY)
-            }
-            if (indiv == 2)
-            {
-                ctx.drawImage(rock1, pointX, pointY)
-            }
-            if (indiv == 3)
-            {
-                ctx.drawImage(flower, pointX, pointY)
-            }
-            pointX += 100
-        }
-
-        pointX = 0
-        pointY += 100
-    }
-}
+// ====================
+// Collision
+// ====================
 
 function collisionMap(x, y)
 {
-    let pointX = 0
-    let pointY = 0
+    let pointX = 0;
+    let pointY = 0;
 
-    for (const horz of map)
+    for (const row of map)
     {
-        for (const indiv of horz)
+        for (const tile of row)
         {
-            if (indiv == 1 || indiv == 2)
+            // 1 and 2 are solid
+            if (tile == 1 || tile == 2 || tile == 4)
             {
+                // Rectangle collision
                 if (
-                        x < pointX + 100 &&
-                        x + 100 > pointX &&
-                        y < pointY + 100 &&
-                        y + 100 > pointY
-                    )
+                    x < pointX + 100 &&
+                    x + playerWidth > pointX &&
+                    y < pointY + 100 &&
+                    y + playerHeight > pointY
+                )
                 {
-                    pg = 0
-
-                    if (x + 100 < pointX + 50)
-                    {
-                        //set to the left
-
-                        px = pointX
-                        console.log(1)
-                    }
-
-                    if (x > pointX + 49)
-                    {
-                        //set to the right
-
-                        px = pointX + 100
-                        console.log(1)
-                    }
-
-                    if (y + 100 < pointY + 50)
-                    {
-                        // set up
-
-                        py = pointY 
-                        console.log(1)
-                    }
-
-                    if (y > pointY + 50)
-                    {
-                        //set down
-
-                        py = pointY + 100
-                        console.log(1)
-                    }
-
-                    console.log(1)
-
-                    return true
+                    return true;
                 }
-
-                
             }
 
-            pointX += 100
+            pointX += 100;
         }
 
-        pointX = 0
-        pointY += 100
+        pointX = 0;
+        pointY += 100;
     }
 
-    return false
+    return false;
 }
 
-function draw() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    drawMap()
+// ====================
+// Check if standing
+// ====================
 
-    ctx.drawImage(plr, px, py);
+function onGround()
+{
+    return collisionMap(px, py + 1);
 }
 
-function thing1() {
 
-    pg += g
-    py += pg
+// ====================
+// Movement
+// ====================
 
-    if (pj > 0) {
-        pj -= pg
+function movement()
+{
+    // --------------------
+    // Horizontal movement
+    // --------------------
+
+    let newX = px;
+
+    if (keys["a"])
+    {
+        newX -= speed;
+    }
+
+    if (keys["d"])
+    {
+        newX += speed;
+    }
+
+    // Only move horizontally if there isn't a collision
+    if (!collisionMap(newX, py))
+    {
+        px = newX;
+    }
+
+
+    // --------------------
+    // Jump
+    // --------------------
+
+    if (keys[" "] && onGround())
+    {
+        velocityY = -jumpStrength;
+    }
+
+
+    // --------------------
+    // Gravity
+    // --------------------
+
+    velocityY += gravity;
+
+    let newY = py + velocityY;
+
+
+    // --------------------
+    // Vertical collision
+    // --------------------
+
+    if (!collisionMap(px, newY))
+    {
+        py = newY;
+    }
+    else
+    {
+        // Moving down
+        if (velocityY > 0)
+        {
+            // Put player exactly on top of block
+            py = Math.floor((py + playerHeight) / 100) * 100 - 1;
+        }
+
+        // Moving up
+        else if (velocityY < 0)
+        {
+            // Find the block above and place player underneath it
+            py = Math.ceil(py / 100) * 100 - 1;
+        }
+
+        velocityY = 0;
     }
 }
 
-function gameLoop() {
-    collisionMap(px, py);
-    thing1();
-    keysi();
+
+// ====================
+// Draw map
+// ====================
+
+function drawMap()
+{
+    let pointX = 0;
+    let pointY = 0;
+
+    // Camera position
+    let cameraX = px - canvas.width / 2 + playerWidth / 2;
+    let cameraY = py - canvas.height / 2 + playerHeight / 2;
+
+    for (const row of map)
+    {
+        for (const tile of row)
+        {
+            let drawX = pointX - cameraX;
+            let drawY = pointY - cameraY;
+
+            if (tile == 1)
+            {
+                ctx.drawImage(
+                    rock,
+                    drawX,
+                    drawY,
+                    100,
+                    100
+                );
+            }
+
+            if (tile == 2)
+            {
+                ctx.drawImage(
+                    rock1,
+                    drawX,
+                    drawY,
+                    100,
+                    100
+                );
+            }
+
+            if (tile == 3)
+            {
+                ctx.drawImage(
+                    flower,
+                    drawX,
+                    drawY,
+                    100,
+                    100
+                );
+            }
+
+            if (tile == 4)
+            {
+                ctx.drawImage(
+                    grass,
+                    drawX,
+                    drawY,
+                    100,
+                    100
+                );
+            }
+
+            pointX += 100;
+        }
+
+        pointX = 0;
+        pointY += 100;
+    }
+}
+
+
+
+function drawEnemy()
+{
+    for (const enemy of enemies)
+    {
+        if (enemy[0] == 'octo')
+        {
+
+            // Camera position
+            let cameraX = px - canvas.width / 2 + playerWidth / 2;
+            let cameraY = py - canvas.height / 2 + playerHeight / 2;
+
+            let drawX = enemy[2] - cameraX;
+            let drawY = enemy[3] - cameraY;
+
+            ctx.drawImage(
+                octo,
+                drawX,
+                drawY,
+                100,
+                100
+            );
+        }
+    }
+}
+
+
+function enemyHandler()
+{
+    for (const enemy of enemies)
+    {
+        if (enemy[4] < 59)
+        {
+            enemy[4] += 1
+        }
+        else
+        {
+            enemy[4] = 0
+        }
+
+        if (enemy[0] == 'octo')
+        {
+            if (enemy[4] >= 0 && enemy[4] <= 29)
+            {
+                enemy[2] -= 10
+            }
+            else
+            {
+                enemy[2] += 10
+            }
+        }
+    }
+}
+
+// ====================
+// Draw everything
+// ====================
+
+function draw()
+{
+    ctx.fillStyle = '#18004f'
+    ctx.fillRect(
+        0,
+        0,
+        canvas.width,
+        canvas.height
+    );
+
+    drawMap();
+
+    drawEnemy();
+
+    // Always draw player in centre of screen
+    ctx.drawImage(
+        plr,
+        canvas.width / 2 - playerWidth / 2,
+        canvas.height / 2 - playerHeight / 2,
+        playerWidth,
+        playerHeight
+    );
+}
+
+
+// ====================
+// Game loop
+// ====================
+
+function gameLoop()
+{
+    movement();
+    enemyHandler();
     draw();
-    
-    py -= pj
+
+    console.log(enemies[0][1])
 
     requestAnimationFrame(gameLoop);
 }
 
 gameLoop();
 
-// Resize canvas when window changes size
+
+// ====================
+// Resize
+// ====================
+
 window.addEventListener("resize", () => {
+
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
+
 });
+
 </script>
 
 </body>
