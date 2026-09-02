@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        canvas {
+            display: block;
+            width: 100vw;
+            height: 100vh;
+        }
+    </style>
+</head>
+
+<body>
+
+<canvas id="canvas"></canvas>
+
+<script>
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
+
+// Make canvas fill the screen
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+// Image
+const plr = new Image();
+plr.src = "assets/images/beb.png";
+
+const rock = new Image()
+rock.src = "assets/images/rock.png";
+
+const rock1 = new Image()
+rock1.src = "assets/images/rock1.png";
+
+const flower = new Image()
+flower.src = "assets/images/flower.png";
+
+
+//map
+
+const map = [
+    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 1],
+    [1, 0, 2, 0, 0, 2, 2, 0, 0, 0, 0, 0, 1],
+    [1, 0, 2, 0, 2, 2, 2, 0, 2, 0, 0, 0, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+]
+
+const g = 0.981
+
+
+// Player position
+let px = 100;
+let py = 100;
+let pg = 0
+let j = 25
+let pj = 0;
+
+// Movement speed
+const speed = 10;
+
+// Keys currently being held
+const keys = {};
+
+document.addEventListener("keydown", (event) => {
+    keys[event.key.toLowerCase()] = true;
+});
+
+document.addEventListener("keyup", (event) => {
+    keys[event.key.toLowerCase()] = false;
+});
+
+function keysi() {
+    if (keys["w"]) py -= speed;
+    if (keys["s"]) py += speed;
+    if (keys["a"]) px -= speed;
+    if (keys["d"]) px += speed;
+    if (keys[" "]) pj = j;
+}
+
+function drawMap()
+{
+    let pointX = 0
+    let pointY = 0
+
+    for (const horz of map)
+    {
+        for (const indiv of horz)
+        {
+            if (indiv == 1)
+            {
+                ctx.drawImage(rock, pointX, pointY)
+            }
+            if (indiv == 2)
+            {
+                ctx.drawImage(rock1, pointX, pointY)
+            }
+            if (indiv == 3)
+            {
+                ctx.drawImage(flower, pointX, pointY)
+            }
+            pointX += 100
+        }
+
+        pointX = 0
+        pointY += 100
+    }
+}
+
+function collisionMap(x, y)
+{
+    let pointX = 0
+    let pointY = 0
+
+    for (const horz of map)
+    {
+        for (const indiv of horz)
+        {
+            if (indiv == 1 || indiv == 2)
+            {
+                if (
+                        x < pointX + 100 &&
+                        x + 100 > pointX &&
+                        y < pointY + 100 &&
+                        y + 100 > pointY
+                    )
+                {
+                    pg = 0
+
+                    if (x + 100 < pointX + 50)
+                    {
+                        //set to the left
+
+                        px = pointX
+                        console.log(1)
+                    }
+
+                    if (x > pointX + 49)
+                    {
+                        //set to the right
+
+                        px = pointX + 100
+                        console.log(1)
+                    }
+
+                    if (y + 100 < pointY + 50)
+                    {
+                        // set up
+
+                        py = pointY 
+                        console.log(1)
+                    }
+
+                    if (y > pointY + 50)
+                    {
+                        //set down
+
+                        py = pointY + 100
+                        console.log(1)
+                    }
+
+                    console.log(1)
+
+                    return true
+                }
+
+                
+            }
+
+            pointX += 100
+        }
+
+        pointX = 0
+        pointY += 100
+    }
+
+    return false
+}
+
+function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    drawMap()
+
+    ctx.drawImage(plr, px, py);
+}
+
+function thing1() {
+
+    pg += g
+    py += pg
+
+    if (pj > 0) {
+        pj -= pg
+    }
+}
+
+function gameLoop() {
+    collisionMap(px, py);
+    thing1();
+    keysi();
+    draw();
+    
+    py -= pj
+
+    requestAnimationFrame(gameLoop);
+}
+
+gameLoop();
+
+// Resize canvas when window changes size
+window.addEventListener("resize", () => {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+});
+</script>
+
+</body>
+</html>
