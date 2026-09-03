@@ -11,7 +11,26 @@ canvas.height = window.innerHeight;
 // Images
 // ====================
 
-import * as imgs from "/asts/src/imgs.js"
+const imgs_plr = new Image();
+imgs_plr.src = "../imgs/beb.png";
+
+const imgs_rock = new Image();
+imgs_rock.src = "../imgs/rock.png";
+
+const imgs_rock1 = new Image();
+imgs_rock1.src = "../imgs/rock1.png";
+
+const imgs_flower = new Image();
+imgs_flower.src = "../imgs/flower.png";
+
+const imgs_grass = new Image();
+imgs_grass.src = "../imgs/grass.png";
+
+const imgs_octo = new Image();
+imgs_octo.src = "../imgs/octo.png";
+
+const imgs_pea = new Image();
+imgs_pea.src = "../imgs/pea.png";
 
 // ====================
 // Map
@@ -268,7 +287,7 @@ function drawMap()
             if (tile == 1)
             {
                 ctx.drawImage(
-                    rock,
+                    imgs_rock,
                     drawX,
                     drawY,
                     100,
@@ -279,7 +298,7 @@ function drawMap()
             if (tile == 2)
             {
                 ctx.drawImage(
-                    rock1,
+                    imgs_rock1,
                     drawX,
                     drawY,
                     100,
@@ -290,7 +309,7 @@ function drawMap()
             if (tile == 3)
             {
                 ctx.drawImage(
-                    flower,
+                    imgs_flower,
                     drawX,
                     drawY,
                     100,
@@ -301,7 +320,7 @@ function drawMap()
             if (tile == 4)
             {
                 ctx.drawImage(
-                    grass,
+                    imgs_grass,
                     drawX,
                     drawY,
                     100,
@@ -334,7 +353,7 @@ function drawEnemy()
             let drawY = enemy[3] - cameraY;
 
             ctx.drawImage(
-                octo,
+                imgs_octo,
                 drawX,
                 drawY,
                 100,
@@ -392,7 +411,7 @@ function draw()
 
     // Always draw player in centre of screen
     ctx.drawImage(
-        plr,
+        imgs_plr,
         canvas.width / 2 - playerWidth / 2,
         canvas.height / 2 - playerHeight / 2,
         playerWidth,
