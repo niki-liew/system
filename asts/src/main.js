@@ -11,7 +11,7 @@ canvas.height = window.innerHeight;
 // Images
 // ====================
 
-import * as imgs from "asts/src/imgs.js"
+import * as imgs from "/asts/src/imgs.js"
 
 // ====================
 // Map
