@@ -60,10 +60,10 @@ const map = [
 
 
 let enemies = [
-    ['octo', 10, 1000, 4300, 0],
-    ['octo', 10, 700, 4000, 29]
+    ['octo', 1000, 4300, 10, 0],
+    ['octo', 700, 4000, 10, 29]
 ]
-// [name, hp, x, y, count]
+// [name, x, y, hp, count]
 
 
 
@@ -156,11 +156,69 @@ function onGround()
 
 
 
+
+
+
+
+function enemyHandler()
+{
+    for (const enemy of enemies)
+    {
+        if (enemy[4] < 59)
+        {
+            enemy[4] += 1
+        }
+        else
+        {
+            enemy[4] = 0
+        }
+
+        if (enemy[0] == 'octo')
+        {
+            if (enemy[4] >= 0 && enemy[4] <= 29)
+            {
+                enemy[1] -= 10
+            }
+            else
+            {
+                enemy[1] += 10
+            }
+        }
+    }
+}
+
+
+
+let projectiles = [
+]
+
+// [name, x, y, xDir, yDir, speed]
+
+
+function projectilesHandler()
+{
+    for (const prj of projectiles)
+    {
+        prj[1] += prj[3] * prj[5] 
+        prj[2] += prj[4] * prj[5] 
+    }
+}
+
 function movement()
 {
 
 
     let newX = px;
+
+
+
+    if (keys["q"])
+    {
+        projectiles.push(
+    ['pea', px, py, 1, 1, 10]); 
+    }
+
+
 
     if (keys["a"])
     {
@@ -221,42 +279,11 @@ function movement()
 }
 
 
-
-function enemyHandler()
-{
-    for (const enemy of enemies)
-    {
-        if (enemy[4] < 59)
-        {
-            enemy[4] += 1
-        }
-        else
-        {
-            enemy[4] = 0
-        }
-
-        if (enemy[0] == 'octo')
-        {
-            if (enemy[4] >= 0 && enemy[4] <= 29)
-            {
-                enemy[2] -= 10
-            }
-            else
-            {
-                enemy[2] += 10
-            }
-        }
-    }
-}
-
 function gameLoop()
 {
     movement();
     enemyHandler();
-    
-
-
-
+    projectilesHandler();
 
 
     draw.ctx.fillStyle = '#18004f'
@@ -270,6 +297,8 @@ function gameLoop()
     draw.drawMap(px, py, map, imgs);
 
     draw.drawEnemy(px, py, imgs, enemies);
+    
+    draw.drawEnemy(px, py, imgs, projectiles)
 
     draw.ctx.drawImage(
         imgs.plr,
@@ -291,10 +320,6 @@ function gameLoop()
 
 gameLoop();
 
-
-// ====================
-// Resize
-// ====================
 
 window.addEventListener("resize", () => {
 

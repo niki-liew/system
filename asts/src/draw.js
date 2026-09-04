@@ -76,18 +76,27 @@ function drawEnemy(px, py, imgs, enemies)
 {
     for (const enemy of enemies)
     {
+        let cameraX = px - canvas.width / 2 + 100 / 2;
+        let cameraY = py - canvas.height / 2 + 100 / 2;
+
+        let drawX = enemy[1] - cameraX;
+        let drawY = enemy[2] - cameraY;
+
         if (enemy[0] == 'octo')
         {
-
-            // Camera position
-            let cameraX = px - canvas.width / 2 + 100 / 2;
-            let cameraY = py - canvas.height / 2 + 100 / 2;
-
-            let drawX = enemy[2] - cameraX;
-            let drawY = enemy[3] - cameraY;
-
             ctx.drawImage(
                 imgs.octo,
+                drawX,
+                drawY,
+                100,
+                100
+            );
+        }
+
+        if (enemy[0] == 'pea')
+        {
+            ctx.drawImage(
+                imgs.pea,
                 drawX,
                 drawY,
                 100,
