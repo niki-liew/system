@@ -1,21 +1,8 @@
-
-const canvas = document.getElementById("canvas");
-const ctx = canvas.getContext("2d");
-
-// Canvas
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-
-
-// ====================
-// Images
-// ====================
-
 import * as imgs from './imgs.js'
 
-// ====================
-// Map
-// ====================
+import * as draw from "./draw.js"
+
+
 
 const map = [
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -69,9 +56,8 @@ const map = [
 ];
 
 
-// ====================
-// enemies
-// ====================
+
+
 
 let enemies = [
     ['octo', 10, 1000, 4300, 0],
@@ -79,22 +65,25 @@ let enemies = [
 ]
 // [name, hp, x, y, count]
 
-// ====================
-// Player
-// ====================
+
+
+
 
 const playerWidth = 100;
 const playerHeight = 100;
 
-// let px = 100;
-// let py = 2200;
+
+
 
 let px = 400;
 let py = 4500;
 
-// ====================
-// Physics
-// ====================
+
+
+
+
+
+
 
 const speed = 10;
 const gravity = 0.981;
@@ -104,9 +93,9 @@ let velocityY = 0;
 const jumpStrength = 25;
 
 
-// ====================
-// Keyboard
-// ====================
+
+
+
 
 const keys = {};
 
@@ -119,9 +108,8 @@ document.addEventListener("keyup", (event) => {
 });
 
 
-// ====================
-// Collision
-// ====================
+
+
 
 function collisionMap(x, y)
 {
@@ -158,9 +146,6 @@ function collisionMap(x, y)
 }
 
 
-// ====================
-// Check if standing
-// ====================
 
 function onGround()
 {
@@ -168,15 +153,12 @@ function onGround()
 }
 
 
-// ====================
-// Movement
-// ====================
+
+
 
 function movement()
 {
-    // --------------------
-    // Horizontal movement
-    // --------------------
+
 
     let newX = px;
 
@@ -190,16 +172,14 @@ function movement()
         newX += speed;
     }
 
-    // Only move horizontally if there isn't a collision
+
     if (!collisionMap(newX, py))
     {
         px = newX;
     }
 
 
-    // --------------------
-    // Jump
-    // --------------------
+
 
     if (keys[" "] && onGround())
     {
@@ -207,18 +187,14 @@ function movement()
     }
 
 
-    // --------------------
-    // Gravity
-    // --------------------
+
 
     velocityY += gravity;
 
     let newY = py + velocityY;
 
 
-    // --------------------
-    // Vertical collision
-    // --------------------
+
 
     if (!collisionMap(px, newY))
     {
@@ -245,11 +221,6 @@ function movement()
 }
 
 
-// ====================
-// Draw map
-// ====================
-
-import * as draw from "./draw.js"
 
 function enemyHandler()
 {
@@ -278,24 +249,42 @@ function enemyHandler()
     }
 }
 
-// ====================
-// Draw everything
-// ====================
-
-
-
-
-// ====================
-// Game loop
-// ====================
-
 function gameLoop()
 {
     movement();
     enemyHandler();
-    draw.draw();
+    
 
-    console.log(enemies[0][1])
+
+
+
+
+    draw.ctx.fillStyle = '#18004f'
+    draw.ctx.fillRect(
+        0,
+        0,
+        canvas.width,
+        canvas.height   
+    );
+
+    draw.drawMap(px, py, map, imgs);
+
+    draw.drawEnemy(px, py, imgs, enemies);
+
+    draw.ctx.drawImage(
+        imgs.plr,
+        canvas.width / 2 - 100 / 2,
+        canvas.height / 2 - 100 / 2,
+        100,
+        100
+    );
+
+    // draw.drawMainMenu(imgs)
+
+
+
+
+
 
     requestAnimationFrame(gameLoop);
 }

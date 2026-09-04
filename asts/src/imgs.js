@@ -19,6 +19,9 @@ octo.src = "asts/imgs/octo.png";
 const pea = new Image();
 pea.src = "asts/imgs/pea.png";
 
+const system = new Image();
+system.src = "asts/imgs/system.png";
+
 export
 {
     plr,
@@ -27,5 +30,6 @@ export
     flower,
     grass,
     octo,
-    pea
+    pea,
+    system
 }

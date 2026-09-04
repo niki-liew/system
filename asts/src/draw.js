@@ -1,11 +1,17 @@
-function drawMap()
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+function drawMap(px, py, map, imgs)
 {
     let pointX = 0;
     let pointY = 0;
 
     // Camera position
-    let cameraX = px - canvas.width / 2 + playerWidth / 2;
-    let cameraY = py - canvas.height / 2 + playerHeight / 2;
+    let cameraX = px - canvas.width / 2 + 100 / 2;
+    let cameraY = py - canvas.height / 2 + 100 / 2;
 
     for (const row of map)
     {
@@ -66,7 +72,7 @@ function drawMap()
     }
 }
 
-function drawEnemy()
+function drawEnemy(px, py, imgs, enemies)
 {
     for (const enemy of enemies)
     {
@@ -74,8 +80,8 @@ function drawEnemy()
         {
 
             // Camera position
-            let cameraX = px - canvas.width / 2 + playerWidth / 2;
-            let cameraY = py - canvas.height / 2 + playerHeight / 2;
+            let cameraX = px - canvas.width / 2 + 100 / 2;
+            let cameraY = py - canvas.height / 2 + 100 / 2;
 
             let drawX = enemy[2] - cameraX;
             let drawY = enemy[3] - cameraY;
@@ -91,26 +97,22 @@ function drawEnemy()
     }
 }
 
-function draw()
+function drawMainMenu(imgs)
 {
-    ctx.fillStyle = '#18004f'
-    ctx.fillRect(
-        0,
-        0,
-        canvas.width,
-        canvas.height   
-    );
-
-    drawMap();
-
-    drawEnemy();
-
-    // Always draw player in centre of screen
     ctx.drawImage(
-        imgs.plr,
-        canvas.width / 2 - playerWidth / 2,
-        canvas.height / 2 - playerHeight / 2,
-        playerWidth,
-        playerHeight
+        imgs.system,
+        canvas.width / 2 - 400 / 2,
+        canvas.height / 2 - 400 / 2,
+        400,
+        100
     );
+}
+
+export
+{
+    canvas,
+    ctx,
+    drawMap,
+    drawEnemy,
+    drawMainMenu,
 }
